@@ -113,9 +113,30 @@ npm run dev
 
 1,700 signups during validation phase.
 
+## Contributing
+
+VaultSignal is open source while in freemium. Contributions welcome.
+
+1. Fork the repo
+2. Create a feature branch (`git checkout -b feature/your-feature`)
+3. Commit your changes (`git commit -m 'Add your feature'`)
+4. Push to the branch (`git push origin feature/your-feature`)
+5. Open a Pull Request
+
+All PRs are reviewed before merging. Please keep changes focused and include a clear description of what you changed and why.
+
+### Ideas for contributions
+
+- Backend API (Node.js + PostgreSQL)
+- Additional threat detection modules
+- Dashboard analytics charts
+- Dark theme (V2 design)
+- Notification integrations (Slack, Teams, PagerDuty)
+- SDK for automatic log collection
+
 ## License
 
-MIT
+MIT — see [LICENSE](LICENSE) for details.
 
 ---
 
