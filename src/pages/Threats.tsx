@@ -91,8 +91,14 @@ function Threats() {
             headerName: 'REPOS',
             field: 'repos',
             flex: 1,
-            cellStyle: { color: '#166434', paddingTop: '16px' },
-            cellClass: 'text-sm font-medium'
+            cellStyle: { paddingTop: '16px' },
+            cellRenderer: (params: { value: string }) => {
+                return (
+                    <a href={`https://github.com/${params.value}`} target="_blank" rel="noreferrer" style={{ color: '#166434' }} className="hover:underline font-medium">
+                        {params.value}
+                    </a>
+                )
+            }
         }
     ]
 
