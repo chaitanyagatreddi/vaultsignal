@@ -76,9 +76,9 @@ function Threats() {
             width: 220,
             cellRenderer: (params: { value: string }) => {
                 if (params.value === 'none') {
-                    return <span className="italic" style={{ color: '#9CA3AF' }}>{params.value}</span>
+                    return <span className="italic" style={{ color: '#01065E' }}>{params.value}</span>
                 }
-                return <a href={`mailto:${params.value}`} style={{ color: '#01065E' }} className="hover:underline font-medium">{params.value}</a>
+                return <a href={`mailto:${params.value}`} className="hover:underline font-bold" style={{ color: '#000000' }}>{params.value}</a>
             }
         },
         { 
