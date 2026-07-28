@@ -18,10 +18,10 @@ function Threats() {
         {
             headerName: 'CONTRIBUTOR',
             field: 'username',
-            cellStyle: { paddingLeft: '24px' },
+            cellStyle: { paddingLeft: '24px', paddingTop: '16px', paddingBottom: '16px' },
             cellRenderer: (params: { value: string }) => {
                 return (
-                    <a href={`https://github.com/${params.value.replace('@', '')}`} target="_blank" rel="noreferrer" className="text-blue-500 hover:underline font-medium">
+                    <a href={`https://github.com/${params.value.replace('@', '')}`} target="_blank" rel="noreferrer" style={{ color: '#166434' }} className="hover:underline font-semibold">
                         {params.value}
                     </a>
                 )
@@ -76,9 +76,9 @@ function Threats() {
             width: 220,
             cellRenderer: (params: { value: string }) => {
                 if (params.value === 'none') {
-                    return <span className="text-gray-400 italic">{params.value}</span>
+                    return <span className="italic" style={{ color: '#9CA3AF' }}>{params.value}</span>
                 }
-                return <a href={`mailto:${params.value}`} className="text-blue-500 hover:underline">{params.value}</a>
+                return <a href={`mailto:${params.value}`} style={{ color: '#01065E' }} className="hover:underline font-medium">{params.value}</a>
             }
         },
         { 
@@ -91,7 +91,8 @@ function Threats() {
             headerName: 'REPOS',
             field: 'repos',
             flex: 1,
-            cellClass: 'pt-[16px] text-sm text-gray-800'
+            cellStyle: { color: '#166434', paddingTop: '16px' },
+            cellClass: 'text-sm font-medium'
         }
     ]
 
