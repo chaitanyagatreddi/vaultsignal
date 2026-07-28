@@ -187,69 +187,7 @@ function Threats() {
                                 className="border-none focus-visible:ring-0 px-0 h-6"
                             />
                         </div>
-                        <div className="flex items-center gap-[12px]">
-                            <button 
-                                onClick={() => setIsExpandedSearchOpen(!isExpandedSearchOpen)}
-                                className="text-sm font-medium text-blue-600 hover:text-blue-800 transition px-2"
-                            >
-                                {isExpandedSearchOpen ? 'Hide Expand Search' : 'Expand Search'}
-                            </button>
-                        </div>
                     </div>
-
-                    {/* Expand Search Panel (Apollo/Tomba Fallback) */}
-                    {isExpandedSearchOpen && (
-                        <div className="flex flex-col gap-4 p-4 bg-blue-50 border border-blue-100 rounded-md">
-                            <div className="flex items-center gap-4">
-                                <span className="text-sm font-medium text-gray-700">Missing Email? Enrich via Apollo/Tomba:</span>
-                                <Input 
-                                    type="text" 
-                                    placeholder="Person Name (e.g. John Doe)" 
-                                    value={personName}
-                                    onChange={(e) => setPersonName(e.target.value)}
-                                    className="w-56 bg-white"
-                                />
-                                <Input 
-                                    type="text" 
-                                    placeholder="Company Domain (e.g. apple.com)" 
-                                    value={companyName}
-                                    onChange={(e) => setCompanyName(e.target.value)}
-                                    className="w-56 bg-white"
-                                />
-                                <button 
-                                    onClick={handleFindEmail}
-                                    disabled={isSearching}
-                                    className="bg-blue-600 text-white px-4 py-2 rounded-md font-medium text-sm hover:bg-blue-700 transition disabled:opacity-50"
-                                >
-                                    {isSearching ? 'Searching...' : 'Find Email via Apollo'}
-                                </button>
-                            </div>
-                            
-                            {/* API Result Display */}
-                            {searchResult && !searchResult.error && (
-                                <div className="p-3 bg-green-50 border border-green-200 rounded-md mt-2 flex flex-col gap-1 text-sm text-green-900 w-full">
-                                    <span className="font-bold">Match Found in Apollo & Validated by Monid!</span>
-                                    <div className="grid grid-cols-2 gap-2 mt-2">
-                                        <span><strong>Name:</strong> {searchResult.name}</span>
-                                        <span><strong>Title:</strong> {searchResult.title}</span>
-                                        <span><strong>Raw Email:</strong> {searchResult.email || searchResult.email_url || 'Requires Credits'}</span>
-                                        <span className="flex items-center gap-2">
-                                            <strong>Monid Status:</strong> 
-                                            <span className="bg-green-200 text-green-800 px-2 py-0.5 rounded-full text-xs font-bold">
-                                                {searchResult.monid_validation}
-                                            </span>
-                                        </span>
-                                        <span className="col-span-2"><strong>LinkedIn:</strong> <a href={searchResult.linkedin_url} className="text-blue-600 hover:underline">{searchResult.linkedin_url}</a></span>
-                                    </div>
-                                </div>
-                            )}
-                            {searchResult && searchResult.error && (
-                                <div className="p-3 bg-red-50 border border-red-200 rounded-md mt-2 text-sm text-red-700 font-medium">
-                                    {searchResult.error}
-                                </div>
-                            )}
-                        </div>
-                    )}
                 </div>
 
                 {/* Data Table */}
