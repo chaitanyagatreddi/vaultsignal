@@ -5,7 +5,6 @@ import {
     DrawerTitle,
 } from '@/components/ui/drawer'
 
-import Logo from '@/assets/logos/vault-logo.svg?react'
 import DashBoard from '@/assets/svgs/dashboard.svg?react'
 import Threats from '@/assets/svgs/threats.svg?react'
 import Analytics from '@/assets/svgs/analytics.svg?react'
@@ -22,8 +21,8 @@ function DrawerWrapper() {
                 style={{ width: '15rem' }}
             >
                 <DrawerHeader className="flex flex-col justify-around gap-2 items-start pt-[2rem] pr-[20px]">
-                    <DrawerTitle className="text-white text-2xl">
-                        <Logo />
+                    <DrawerTitle className="text-white text-3xl font-bold tracking-tight">
+                        SignalX
                     </DrawerTitle>
                 </DrawerHeader>
                 <div className="h-full p-5 flex flex-col gap-5 text-xm pr-[2rem] w-full text-sm">
@@ -31,14 +30,15 @@ function DrawerWrapper() {
                         ReactComponent={DashBoard}
                         text="Dashboard"
                     />
-                    <DashBoardItem ReactComponent={Threats} text="threats" />
+                    <DashBoardItem ReactComponent={Threats} text="Contributors" path="threats" />
                     <DashBoardItem
                         ReactComponent={Analytics}
-                        text="analytics"
+                        text="Trending"
+                        path="analytics"
                     />
-                    <DashBoardItem ReactComponent={EventLogs} text="events" />
-                    <DashBoardItem ReactComponent={Reports} text="reports" />
-                    <DashBoardItem ReactComponent={Settings} text="settings" />
+                    <DashBoardItem ReactComponent={EventLogs} text="Targeted Search" path="events" />
+                    <DashBoardItem ReactComponent={Reports} text="Campaigns" path="reports" />
+                    <DashBoardItem ReactComponent={Settings} text="Settings" path="settings" />
                 </div>
             </DrawerContent>
         </Drawer>

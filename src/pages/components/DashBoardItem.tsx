@@ -8,25 +8,28 @@ type DashBoardItemType = {
         React.SVGProps<SVGSVGElement> & { title?: string }
     >
     text: string
+    path?: string
 }
 
 const DashBoardItem: React.FC<DashBoardItemType> = ({
     ReactComponent,
     text,
+    path
 }) => {
     const [hoveredState, setHoveredState] = useState<boolean>(false)
     const [selectedColor, setSelectedColor] = useState<boolean>(false)
     const locationName = useLocation()
     const navigte = useNavigate()
+    const targetPath = path || text;
 
     useEffect(() => {
-        if (locationName.pathname.substring(1) == text) {
+        if (locationName.pathname.substring(1) == targetPath) {
             setSelectedColor(true)
             setHoveredState(false)
         } else {
             setSelectedColor(false)
         }
-    }, [locationName.pathname])
+    }, [locationName.pathname, targetPath])
 
     return (
         <div
@@ -40,7 +43,7 @@ const DashBoardItem: React.FC<DashBoardItemType> = ({
                       ? { backgroundColor: '#0080FB' }
                       : { background: 'transparent' }
             }
-            onClick={(_e) => navigte(`/${text}`)}
+            onClick={(_e) => navigte(`/${targetPath}`)}
         >
             <ReactComponent />
             <p className="capitalize">{text}</p>
