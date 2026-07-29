@@ -104,23 +104,50 @@ const OnboardingDeck = () => {
                             transition={{ type: 'spring', stiffness: 260, damping: 22 }}
                             className="absolute inset-0 rounded-2xl bg-white shadow-2xl border border-[#D9D9D9] flex flex-col items-center justify-center text-center p-10"
                         >
-                            <motion.div
-                                className="text-6xl mb-4 flex gap-2"
-                                initial={{ scale: 0.6 }}
-                                animate={{ scale: [0.6, 1.15, 1] }}
-                                transition={{ duration: 0.55 }}
-                            >
-                                <span>😊</span>
-                                <span>❤️</span>
-                            </motion.div>
-                            <h2 className="text-2xl font-bold text-gray-900 mb-2">You&apos;re in</h2>
+                            <h2 className="text-2xl font-bold text-gray-900 mb-6">You&apos;re in</h2>
+
+                            <div className="flex flex-col gap-3 w-full max-w-[280px] mb-4">
+                                {connected.google && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 12, scale: 0.95 }}
+                                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                                        transition={{ type: 'spring', stiffness: 280, damping: 20 }}
+                                        className="flex items-center gap-3 rounded-[8px] border border-[#D9D9D9] bg-[#FAFAFA] px-4 py-3 text-left"
+                                    >
+                                        <span className="text-3xl" aria-hidden>
+                                            😊
+                                        </span>
+                                        <div>
+                                            <p className="text-[14px] font-semibold text-gray-900">Google connected</p>
+                                            <p className="text-[12px] text-gray-500">Outbound identity ready</p>
+                                        </div>
+                                    </motion.div>
+                                )}
+                                {connected.github && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 12, scale: 0.95 }}
+                                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                                        transition={{ type: 'spring', stiffness: 280, damping: 20, delay: 0.12 }}
+                                        className="flex items-center gap-3 rounded-[8px] border border-[#D9D9D9] bg-[#FAFAFA] px-4 py-3 text-left"
+                                    >
+                                        <span className="text-3xl" aria-hidden>
+                                            ❤️
+                                        </span>
+                                        <div>
+                                            <p className="text-[14px] font-semibold text-gray-900">GitHub connected</p>
+                                            <p className="text-[12px] text-gray-500">Contributor signals unlocked</p>
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </div>
+
                             <p className="text-gray-500 text-sm max-w-[260px]">
-                                Google and GitHub are ready. SignalX can start pulling contributor signals.
+                                SignalX can start pulling contributor signals.
                             </p>
                             <button
                                 type="button"
                                 onClick={() => {
-                                    window.location.hash = '#/threats'
+                                    window.location.hash = '#/scan'
                                 }}
                                 className="mt-8 px-5 py-2.5 rounded-lg text-white text-sm font-semibold shadow-sm"
                                 style={{ background: 'linear-gradient(135deg, #2563EB, #8036CB)' }}

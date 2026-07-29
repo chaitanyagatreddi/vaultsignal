@@ -20,15 +20,12 @@ const DashBoardItem: React.FC<DashBoardItemType> = ({
     const [selectedColor, setSelectedColor] = useState<boolean>(false)
     const locationName = useLocation()
     const navigte = useNavigate()
-    const targetPath = path || text;
+    const targetPath = path ?? text.toLowerCase()
 
     useEffect(() => {
-        if (locationName.pathname.substring(1) == targetPath) {
-            setSelectedColor(true)
-            setHoveredState(false)
-        } else {
-            setSelectedColor(false)
-        }
+        const current = locationName.pathname.replace(/^\//, '')
+        setSelectedColor(current === targetPath)
+        if (current === targetPath) setHoveredState(false)
     }, [locationName.pathname, targetPath])
 
     return (
@@ -38,12 +35,12 @@ const DashBoardItem: React.FC<DashBoardItemType> = ({
             onMouseLeave={() => setHoveredState(false)}
             style={
                 selectedColor
-                    ? { backgroundColor: '#0080FB' }
+                    ? { backgroundColor: '#007aff' }
                     : hoveredState
-                      ? { backgroundColor: '#0080FB' }
+                      ? { backgroundColor: 'rgba(0, 122, 255, 0.35)' }
                       : { background: 'transparent' }
             }
-            onClick={(_e) => navigte(`/${targetPath}`)}
+            onClick={() => navigte(targetPath ? `/${targetPath}` : '/')}
         >
             <ReactComponent />
             <p className="capitalize">{text}</p>

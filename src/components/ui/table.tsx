@@ -78,10 +78,11 @@ const AgGridTable = <T,>({
     }, [isGridReady, filterValue])
 
     return (
-        <div className="w-full" style={{ height: '100%' }}>
+        <div className="w-full min-h-[420px] h-[min(58vh,640px)] flex-1">
             <AgGridReact
                 ref={gridRef}
                 rowHeight={56}
+                headerHeight={40}
                 defaultColDef={defaultColDefs}
                 rowClass={'items-center'}
                 columnDefs={columnDefs}
@@ -89,6 +90,7 @@ const AgGridTable = <T,>({
                 theme={vaultTheme}
                 onGridReady={onGridReady}
                 loadThemeGoogleFonts={true}
+                suppressCellFocus={true}
             />
         </div>
     )

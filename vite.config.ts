@@ -9,17 +9,32 @@ export default defineConfig({
     plugins: [react(), tailwindcss(), svgr()],
     server: {
         proxy: {
+            // SignalX / GitRadar FastAPI (python fastapi_app.py → port 7860)
+            '/api/github': {
+                target: 'http://127.0.0.1:7860',
+                changeOrigin: true,
+                // SSE needs long-lived connections
+                timeout: 0,
+                proxyTimeout: 0,
+                configure: (proxy) => {
+                    proxy.on('proxyReq', (proxyReq) => {
+                        proxyReq.setHeader('Accept', 'text/event-stream')
+                        proxyReq.setHeader('Connection', 'keep-alive')
+                        proxyReq.setHeader('Cache-Control', 'no-cache')
+                    })
+                },
+            },
             '/api/apollo': {
                 target: 'https://api.apollo.io',
                 changeOrigin: true,
-                rewrite: (path) => path.replace(/^\/api\/apollo/, '')
+                rewrite: (path) => path.replace(/^\/api\/apollo/, ''),
             },
             '/api/monid': {
                 target: 'https://api.monid.ai',
                 changeOrigin: true,
-                rewrite: (path) => path.replace(/^\/api\/monid/, '')
-            }
-        }
+                rewrite: (path) => path.replace(/^\/api\/monid/, ''),
+            },
+        },
     },
     safelist: [
         'from-red-500',

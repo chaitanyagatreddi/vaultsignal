@@ -35,7 +35,7 @@ npm run dev
 | Route | Screen |
 |-------|--------|
 | `/#/` | Onboarding deck |
-| `/#/threats` | Contributors table |
+| `/#/scan` | GitRadar scan + Contributors table |
 | `/#/events` | Event log |
 | `/#/reports` | Reports |
 

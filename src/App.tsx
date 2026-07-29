@@ -12,7 +12,8 @@ function App() {
                 <Routes>
                     <Route path="/" element={<MainLayout />}>
                         <Route index element={<OnboardingDeck />} />
-                        <Route path="threats" element={<Threats />} />
+                        <Route path="scan" element={<Threats />} />
+                        <Route path="threats" element={<Navigate to="/scan" replace />} />
                         <Route path="events" element={<EventLog />} />
                         <Route path="reports" element={<Report />} />
                     </Route>

@@ -2,12 +2,12 @@ import { themeQuartz } from 'ag-grid-community'
 
 // to use myTheme in an application, pass it to the theme grid option
 const vaultTheme = themeQuartz.withParams({
-    accentColor: '#087AD1',
+    accentColor: '#007aff',
     backgroundColor: '#FFFFFF',
     borderColor: '#D9D9D9',
-    borderRadius: 2,
+    borderRadius: 0,
     browserColorScheme: 'light',
-    cellHorizontalPaddingScale: 0.7,
+    cellHorizontalPaddingScale: 0.85,
     chromeBackgroundColor: {
         ref: 'backgroundColor',
     },
@@ -15,18 +15,18 @@ const vaultTheme = themeQuartz.withParams({
     fontFamily: {
         googleFont: 'Inter',
     },
-    fontSize: 13,
-    foregroundColor: '#555B62',
+    fontSize: 15,
+    foregroundColor: '#1E1E1E',
     headerBackgroundColor: '#FFFFFF',
     headerFontSize: 13,
     headerFontWeight: 400,
-    headerTextColor: '#84868B',
+    headerTextColor: '#757575',
     rowBorder: true,
-    rowVerticalPaddingScale: 0.8,
+    rowVerticalPaddingScale: 1,
     sidePanelBorder: true,
-    spacing: 6,
+    spacing: 8,
     wrapperBorder: false,
-    wrapperBorderRadius: 2,
+    wrapperBorderRadius: 0,
     rowHoverColor: '#F5F5F5',
 })
 
