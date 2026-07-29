@@ -1,0 +1,15 @@
+---
+description: SignalX Brand Design System — shell, tokens, onboarding cards
+globs: src/**/*.{tsx,ts,css}
+alwaysApply: true
+---
+
+# SignalX Brand Design System
+
+Follow `docs/SIGNALX_BRAND_DESIGN_SYSTEM.md` as the source of truth.
+
+- Shell: navy sidebar, white header, `#FAFAFA` canvas, soft rounded chrome, pill statuses.
+- Not Material 2 — calm enterprise SaaS fluency (Threats screen reference).
+- Tokens: blue step `#2563EB`/`#1E40AF`; purple brand `#8036CB`/`#5B21B6`; links `#166434`; tier `#F3E8FF`/`#6B21A8`.
+- Onboarding: Tinder stack — Google (blue) → GitHub (purple) → end 😊❤️. No Mario/mascot.
+- Motion: `motion/react` for card swipe/entrance only.
