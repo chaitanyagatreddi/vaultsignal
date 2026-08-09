@@ -33,53 +33,31 @@ type ReportName = {
     reportId: number
 }
 
+/**
+ * Shared shape for all dashboard card categories (safety, compliance,
+ * threat intelligence, system, network security).
+ * All five previously-separate types were structurally identical.
+ */
+type DashboardCardType = {
+    svg: React.FunctionComponent<React.SVGProps<SVGSVGElement>>
+    svgBgColor: string
+    bgColor: string
+}
+
+// Named aliases for readability and backward compatibility
+type SafetyCheckType = DashboardCardType
+type ComplianceType = DashboardCardType
+type ThreatIntelligenceType = DashboardCardType
+type SystemType = DashboardCardType
+type NetworkSecurityType = DashboardCardType
+
+type PredefinedReportType = DashboardCardType
+
 type ReportType = PredefinedReportType
-
-type SafetyCheckType = {
-    svg: React.FunctionComponent<React.SVGProps<SVGSVGElement>>
-    svgBgColor: string
-    bgColor: string
-}
-
-type ComplianceType = {
-    svg: React.FunctionComponent<React.SVGProps<SVGSVGElement>>
-    svgBgColor: string
-    bgColor: string
-}
-
-type ThreatIntelligenceType = {
-    svg: React.FunctionComponent<React.SVGProps<SVGSVGElement>>
-    svgBgColor: string
-    bgColor: string
-}
-
-type SystemType = {
-    svg: React.FunctionComponent<React.SVGProps<SVGSVGElement>>
-    svgBgColor: string
-    bgColor: string
-}
-
-type NetworkSecurityType = {
-    svg: React.FunctionComponent<React.SVGProps<SVGSVGElement>>
-    svgBgColor: string
-    bgColor: string
-}
-
-type PredefinedReportType =
-    | SafetyCheckType
-    | ComplianceType
-    | ThreatIntelligenceType
-    | SystemType
-    | NetworkSecurityType
 
 type Report = {
     reportName: ReportName
-    type:
-        | SafetyCheckType
-        | ComplianceType
-        | ThreatIntelligenceType
-        | SystemType
-        | NetworkSecurityType
+    type: PredefinedReportType
     type_value: string
     schedule: string
     format: string
@@ -92,6 +70,7 @@ export type {
     Report,
     ReportName,
     ReportType,
+    DashboardCardType,
     SafetyCheckType,
     ComplianceType,
     ThreatIntelligenceType,
