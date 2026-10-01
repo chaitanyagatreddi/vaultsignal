@@ -9,15 +9,13 @@ import { Input } from '@/components/ui/input'
 import SelectWrapper from '@/components/wrappers/SelectWrapper'
 import type { SelectWrapperProps } from '@/types/global-type'
 import CalendarWrapper from '@/components/wrappers/CalendarWrapper'
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 
 const EventLog = () => {
     const defaultColDef = {
         flex: 1,
-        cellClass: 'text-left pt-[16px]', // Tailwind center
-        headerClass:
-            // 'ag-header-cell-label hidden flex justify-start items-start',
-            'ag-header-left-align',
+        cellClass: 'text-left pt-[16px]',
+        headerClass: 'ag-header-left-align',
         resizable: false,
         sortable: false,
     }
@@ -62,39 +60,19 @@ const EventLog = () => {
             },
         },
     ]
-    // const sample: StatusCardProps[] = [
-    //     {
-    //         Element: ThreatsBlocked,
-    //         title: 'Threats Blocked',
-    //         amount: '1,247',
-    //         usage: 12,
-    //         activity: 'Last 24 hours',
-    //     },
-    //     {
-    //         Element: ActiveIncidents,
-    //         title: 'Active Incidents',
-    //         amount: '3',
-    //         usage: -23,
-    //         activity: 'Currently open',
-    //     },
-    //     {
-    //         Element: OnlineUsers,
-    //         title: 'Online Users',
-    //         amount: '1,247',
-    //         usage: 5,
-    //         activity: 'Active sessions',
-    //     },
-    //     {
-    //         Element: SystemHealth,
-    //         title: 'System Health',
-    //         amount: '98.5%',
-    //         usage: 2,
-    //         activity: 'All systems',
-    //     },
-    // ]
 
     const [severity, setSeverity] = useState<string>('')
     const [columnName, selectColumn] = useState<string>('')
+
+    // Fix: wire the search input so it actually filters the table
+    const [searchTerm, setSearchTerm] = useState<string>('')
+    const handleSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(e.target.value)
+    }, [])
+
+    // Status dropdown takes priority over free-text search
+    const effectiveFilterCol = columnName || (searchTerm ? 'user' : '')
+    const effectiveFilterVal = columnName ? severity : searchTerm
 
     const statusOptions: SelectWrapperProps = {
         items: [
@@ -115,7 +93,13 @@ const EventLog = () => {
                 <div className="flex items-center justify-between gap-[8px]">
                     <div className="flex items-center gap-[8px] border border-[#D9D9D9] rounded-[4px] w-[260px] py-[8px] px-[12px]">
                         <SearchSvg />
-                        <Input type="text" placeholder="Search" />
+                        {/* Fix: added value + onChange so the input actually filters the table */}
+                        <Input
+                            type="text"
+                            placeholder="Search"
+                            value={searchTerm}
+                            onChange={handleSearch}
+                        />
                     </div>
                     <div className="flex items-center gap-[12px]">
                         <CalendarWrapper />
@@ -127,21 +111,14 @@ const EventLog = () => {
                             columnName="status"
                             selectColumn={selectColumn}
                         />
-                        {/* <SelectWrapper
-                            label="Status"
-                            items={statusOptions.items}
-                            selectState={setSeverity}
-                            columnName="status"
-                            selectColumn={selectColumn}
-                        /> */}
                     </div>
                 </div>
                 <AgGridTable
                     defaultColDefs={defaultColDef}
                     columnDefs={colDefs}
                     rowData={eventLogs}
-                    filterColumn={columnName}
-                    filterValue={severity}
+                    filterColumn={effectiveFilterCol}
+                    filterValue={effectiveFilterVal}
                 />
             </div>
         </div>
