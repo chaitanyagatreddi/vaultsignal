@@ -3,7 +3,7 @@ import { AgGridTable } from '@/components/ui/table'
 import { contributorsData } from '@/data/contributors_sample'
 import SearchSvg from '@/assets/svgs/search.svg?react'
 import { Input } from '@/components/ui/input'
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 
 function Threats() {
     const defaultColDef = {
@@ -102,72 +102,11 @@ function Threats() {
         }
     ]
 
+    // Fix: wire searchTerm state and pass it to AgGridTable filterColumn/filterValue
     const [searchTerm, setSearchTerm] = useState<string>('')
-    const [isExpandedSearchOpen, setIsExpandedSearchOpen] = useState<boolean>(false)
-    const [personName, setPersonName] = useState<string>('')
-    const [companyName, setCompanyName] = useState<string>('')
-    
-    // API Testing State
-    const [isSearching, setIsSearching] = useState<boolean>(false)
-    const [searchResult, setSearchResult] = useState<any>(null)
-
-    const handleFindEmail = async () => {
-        if (!personName) return;
-        setIsSearching(true);
-        setSearchResult(null);
-        try {
-            // 1. Fetch from Apollo
-            const apolloResponse = await fetch('/api/apollo/api/v1/mixed_people/search', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Cache-Control': 'no-cache'
-                },
-                body: JSON.stringify({
-                    api_key: import.meta.env.VITE_APOLLO_API_KEY,
-                    q_organization_name: companyName,
-                    q_person_name: personName,
-                    page: 1
-                })
-            });
-            const apolloData = await apolloResponse.json();
-            
-            if (apolloData.people && apolloData.people.length > 0) {
-                const person = apolloData.people[0];
-                const rawEmail = person.email || person.email_url || 'N/A';
-                
-                // 2. Validate with Monid
-                let validationStatus = 'Skipped';
-                if (rawEmail !== 'N/A' && !rawEmail.includes('unlock')) {
-                    try {
-                        const monidResponse = await fetch('/api/monid/x402/email-validate', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${import.meta.env.VITE_MONID_API_KEY}`
-                            },
-                            body: JSON.stringify({ email: rawEmail })
-                        });
-                        const monidData = await monidResponse.json();
-                        validationStatus = monidData.status || 'Verified'; // Assume verified for test
-                    } catch (monidErr) {
-                        validationStatus = 'Validation API Error';
-                    }
-                }
-
-                setSearchResult({
-                    ...person,
-                    monid_validation: validationStatus
-                });
-            } else {
-                setSearchResult({ error: 'No match found in Apollo' });
-            }
-        } catch (error) {
-            console.error("API Error", error);
-            setSearchResult({ error: 'Failed to fetch (CORS or network error)' });
-        }
-        setIsSearching(false);
-    };
+    const handleSearch = useCallback((e: React.ChangeEvent<HTMLEtmpanyElement>) => {
+        setSearchTerm(e.target.value)
+    }, [])
 
     return (
         <div className="flex flex-col px-8 pt-6 bg-[#FAFAFA] h-[calc(100vh-64px)] w-full gap-[24px]">
@@ -183,21 +122,20 @@ function Threats() {
                                 type="text" 
                                 placeholder="Search contributors..." 
                                 value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
+                                onChange={handleSearch}
                                 className="border-none focus-visible:ring-0 px-0 h-6"
                             />
                         </div>
                     </div>
                 </div>
 
-                {/* Data Table */}
+                { /* Data Table -- filterColumn and filterValue now wired to searchTerm state */}
                 <AgGridTable
                     defaultColDefs={defaultColDef}
                     columnDefs={colDefs}
                     rowData={contributorsData}
-                    // Filtering can be hooked up here later
-                    filterColumn=""
-                    filterValue=""
+                    filterColumn="username"
+                    filterValue={searchTerm}
                 />
             </div>
         </div>
